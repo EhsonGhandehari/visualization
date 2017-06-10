@@ -1,0 +1,82 @@
+---
+title: "Price of Diamond: The Influnce of Cut Quality"
+author: "Ehson Ghandehari"
+date: "5/8/2016"
+output: 
+        html_document:
+        keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+The purpose of this Markdown document is to utilized some of the famous R htmlwidgets. In this document the **Plotly** and **Highcharacter** R visualization packages were used. The ggplot2's diamonds dataset, which is adataset containing the prices and other attributes of almost 54,000 diamonds, was incorporated in this visualization. For the cookbook refer to: <http://ggplot2.tidyverse.org/reference/diamonds.html>
+
+### Loading Packages and Dataset
+
+The dataset is sample size of 1000 diamonds randomly selected.
+
+```{r loading, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE}
+library(highcharter)
+library(plotly)
+library(ggplot2)
+
+set.seed(200)
+data <- diamonds[sample(nrow(diamonds), 1000),]
+
+```
+
+### Visualization:
+
+Figure 1, presents the correlation between carat measure in the price of a diamond. This plot was fabricated by **plotly**.
+
+```{r fig1, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, fig.cap="Figure 1:"}
+
+plot_ly(data, x = ~carat, y = ~price, color = ~carat,
+        size = ~carat, text = ~paste("Clarity: ", clarity))%>%
+        layout(autosize = F, width = 800, height = 500)
+```
+
+Figure 2, presents the information in Figure 1. However, the plot was created in **ggplot** and then converted to a **plotly** graph by *ggplotly* function. 
+
+```{r fig2, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, fig.cap="Figure 2:"}
+
+fig2 <- ggplot(data, aes(x = carat, y = price)) +
+        geom_point(aes(text = paste("Clarity:", clarity),fill=cut,color=cut))+
+        theme_classic() 
+
+ggplotly(fig2)%>%
+  layout(autosize = F, width = 800, height = 500)
+```
+</br></br></br></br></br></br>
+
+
+
+Figure 3 was also created by **ggplot** first and then converted to **plotly**.  The graph presents Figures 1 and 2, but grouped by the quality of diamond cut. 
+
+
+```{r fig3, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, fig.cap="Figure 3:"}
+
+fig3 <- ggplot(data, aes(x = carat, y = price)) + geom_point(aes(text = paste("Clarity:", clarity))) +
+        geom_smooth(aes(colour = cut, fill = cut)) + facet_wrap(~ cut) 
+
+ggplotly(fig3)%>%
+  layout(autosize = F, width = 800, height = 500)
+```
+</br></br></br></br></br></br>
+
+Figure 4 was also created by **ggplot** first and then converted to **plotly**.  This graph presents previous figures in Histogram form.
+
+```{r fig4, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, fig.cap="Figure 4:"}
+
+fig4 <- ggplot(data,aes(x=cut,fill=clarity))+geom_bar(position="dodge")
+
+ggplotly(fig4)%>%
+  layout(autosize = F, width = 800, height = 500)
+```
+</br></br></br></br></br></br>
+
+
