@@ -1,0 +1,55 @@
+---
+title: "Time-Series: Lung Disease Death in UK Over Time"
+author: "Ehson Ghandehari"
+date: "10/9/2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+## Introduction
+
+The purpose of this Markdown document is to utilized some of the famous R htmlwidgets. In this document the **dygraph** R visualization packages was used for practing time series. 
+
+## Graphs
+
+
+```{r fig1, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, fig.cap="</br>**Figure 1**: presenting the death from lung disease in UK, and breaks it into female and male."}
+library(dygraphs)
+lungDeaths <- cbind(ldeaths, mdeaths, fdeaths)
+dygraph(lungDeaths, main = "Deaths from Lung Disease (UK)") %>%
+ dyOptions(colors = RColorBrewer::brewer.pal(3, "Set2"))
+```
+
+</br>
+
+```{r fig2, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, fig.cap="</br>**Figure 2:** Step plot presentation of Figure1."}
+lungDeaths <- cbind(mdeaths, fdeaths, ldeaths)
+dygraph(lungDeaths, main = "Deaths from Lung Disease (UK)") %>%
+  dyOptions(stepPlot = TRUE)
+```
+
+</br> 
+
+```{r fig3, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, fig.cap="</br>**Figure 3:** The total death counts over time is presented as a filled."}
+dygraph(ldeaths, main = "Deaths from Lung Disease (UK)") %>%
+  dyOptions(fillGraph = TRUE, fillAlpha = 0.4)
+```
+</br>
+
+```{r fig4, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, fig.cap="</br>**Figure 4:** The total death counts over time is presented as point graph."}
+dygraph(ldeaths, main = "Deaths from Lung Disease (UK)") %>%
+  dyOptions(drawPoints = TRUE, pointSize = 2)
+```
+
+
+```{r fig5, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, fig.cap="</br>**Figure 5:** Presenting three different graphing styles on the same axis."}
+dygraph(lungDeaths, main = "Deaths from Lung Disease (UK)") %>%
+  dySeries("mdeaths", drawPoints = TRUE, color = "blue") %>%
+  dySeries("fdeaths", stepPlot = TRUE, fillGraph = TRUE, color = "red")
+```
+</br></br></br>

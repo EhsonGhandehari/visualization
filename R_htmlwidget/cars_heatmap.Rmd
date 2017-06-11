@@ -1,34 +1,24 @@
 ---
-title: "test2"
+title: "R Htmlwidgets: D3, C3, Heatmap"
 author: "Ehson Ghandehari"
-date: "6/10/2017"
-output: 
-        html_document:
-        keep_md: true
+date: "6/12/2016"
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Introduction
 
-The purpose of this Markdown document is to utilized some of the famous R htmlwidgets.  The a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+The purpose of this Markdown document is to utilized some of the R htmlwidgets. In this document **cars** dataset were used for visualization. We use **d3heatmap** for graphing. 
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+## Graphing
 
-```{r cars}
-summary(cars)
-```
+Using **cars** data set:
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
+```{r fig1, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, fig.cap="</br>**Figure 1:** Presenting the cars data set in heatmap. the characteristics (i.e. column) of each car can be explored by scrolling the mouse on the appropriate cell."}
 library(d3heatmap)
-d3heatmap(mtcars, scale="column", colors="Blues")
+d3heatmap(mtcars, scale="column", colors="Spectral")
 
 ```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
